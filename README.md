@@ -10,7 +10,7 @@ Install deps:
 pip install python-telegram-bot==21.4 gspread oauth2client python-dotenv
 ```
 
-Copy `.env.example` to `.env` and fill with your secrets:
+Copy `.env.example` to `.env` and fill with your key:
 
 ```
 BOT_TOKEN=123:ABC
