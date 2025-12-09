@@ -25,7 +25,7 @@ HINT_PENALTY = float(os.getenv("HINT_PENALTY", 0.5))
 USE_GEOFENCE = os.getenv("USE_GEOFENCE", "false").lower() in {"1", "true", "yes"}
 STATE_FILE = Path("state.json")
 
-# ---------------- Game Data ----------------
+# Game Data
 # Replace with your 10 locations; answer_code must only be discoverable on-site.
 QUESTIONS = [
     {
@@ -54,7 +54,7 @@ while len(QUESTIONS) < 10:
         "geofence": None,
     })
 
-# ---------------- Data Classes ----------------
+#Data Classes
 @dataclass
 class TeamState:
     team_name: str
@@ -66,7 +66,7 @@ class TeamState:
     history: List[Dict] = field(default_factory=list)  # [{q, correct, points, attempts, hints}]
     last_location: Optional[Dict] = None               # {lat, lon, ts}
 
-# ---------------- Persistence ----------------
+#Persistence
 class Store:
     def __init__(self, path: Path):
         self.path = path
@@ -90,7 +90,7 @@ class Store:
 
 STORE = Store(STATE_FILE)
 
-# ---------------- Google Sheets ----------------
+#  Google Sheets 
 SCOPES = [
     "https://spreadsheets.google.com/feeds",
     "https://www.googleapis.com/auth/drive",
@@ -135,7 +135,7 @@ def sync_row(team: TeamState):
     except Exception as e:
         print("[GSHEET] sync failed:", e)
 
-# ---------------- Helpers ----------------
+#Helpers
 def is_admin(user_id: int) -> bool:
     return user_id in ADMIN_IDS
 
@@ -165,7 +165,7 @@ def _require_team(update: Update) -> Optional[TeamState]:
         pass
     return None
 
-# ---------------- Handlers ----------------
+#Handlers
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Welcome to Amazing Race!\n\n"
@@ -321,7 +321,7 @@ async def scoreboard(update: Update, context: ContextTypes.DEFAULT_TYPE):
         lines.append(f"{i}. {t.team_name} — {t.score:.2f} pts (Q{t.current_q})")
     await update.message.reply_text("\n".join(lines))
 
-# ---------------- Admin ----------------
+#Admin
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not is_admin(update.effective_user.id):
         return
@@ -370,7 +370,7 @@ async def force(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sync_row(team)
     await update.message.reply_text(f"Forced {team_name} to Q{team.current_q}")
 
-# ---------------- Main ----------------
+# Main
 def main():
     if not BOT_TOKEN:
         raise SystemExit("BOT_TOKEN not set")
