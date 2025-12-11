@@ -13,7 +13,7 @@ pip install python-telegram-bot==21.4 gspread oauth2client python-dotenv
 Copy `.env.example` to `.env` and fill with your key:
 
 ```
-BOT_TOKEN=123:ABC
+BOT_TOKEN=123:***********
 GSHEET_NAME=AmazingRace Live
 ADMIN_IDS=11111111,22222222
 ATTEMPTS_PER_Q=3
@@ -60,21 +60,21 @@ python Main.py
 - /force <TEAM_NAME> <Q_NO> -> jump a team to a specific question
 - /scoreboard -> quick in-chat leaderboard
 
-## Anti-cheat ideas you can enable
+## Anti-cheat idea
 - Geofencing: USE_GEOFENCE=true and set lat/lon/radius for each question.
-- On-site codes: make answer_code something only readable on a plaque/sign (or a small sticker you place).
+- On-site codes: make answer_code something only readable on a plaque/sign (or a small sticker that is place).
 - QR variant: put a short code after a hidden # so OCR/AI from photos will not guess it easily.
 
 ## Scoring rule (built in)
 - Correct answer = 1 point minus HINT_PENALTY per hint used on that question (floors at 0).
 - Wrong attempt reduces attempts_left. After 3 misses -> 0 point and auto-advance.
 
-## Nice extras you can add later
+## Extras TBC
 - Add inline buttons for Ask hint, Share location, Skip (-time or -points).
 - Push a live public scoreboard using Apps Script that reads the same sheet.
-- Add team check-ins by scanning a QR code that triggers a deep-link to your bot.
+- Add team check-ins by scanning a QR code that triggers a deep-link to bot.
 - Export a CSV at the end (for example, add an /export admin command to dump STORE.data).
 
 ## Deploying later
 - Easy path: keep it on a small VM/Raspberry Pi with a process manager (systemd or pm2).
-- Cloud: add a Dockerfile and deploy to Render, Railway, or Cloud Run. If you want, I can add that scaffold.
+- Cloud: add a Dockerfile and deploy to Render, Railway, or Cloud Run. 
